@@ -1,0 +1,20 @@
+ref tells the compiler that the object is initialized before entering the function, while out tells the compiler that the object will be initialized inside the function.
+
+So while ref is two-ways, out is out-only.
+
+The ref modifier means that:
+1.>The value is already set and
+2.>The method can read and modify it.
+
+The out modifier means that:
+
+1.The Value isn't set and can't be read by the method until it is set.
+1.The method must set it before returning.
+
+The out and ref keywords are useful when we want to return a value in the same variables as are passed as an argument. 
+
+ <span class="text-center">Havn't an account? @Html.ActionLink("Login", "User")</span>
+
+<a href="sign-up.html"><i class="fa fa-sign-out"></i> </a>
+
+<li>@Html.ActionLink("Logout", "LogOff", "Home", null, new { @class = "fa fa-sign-out" })</li>
