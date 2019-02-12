@@ -1,0 +1,8 @@
+--Login Query---
+Alter proc Usp_Login 
+ @EmailId varchar(50), 
+ @Password varchar(100) 
+As
+Begin  		
+	   select 'Validuser' from  tbl_UserRegister where EmailId=@EmailId and Password=@Password 		
+End
