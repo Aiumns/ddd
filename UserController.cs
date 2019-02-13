@@ -74,31 +74,55 @@ namespace AdminPannel.Controllers
                 ModelState.AddModelError("", "Error in saving data");
                 return View();
             }
-        }                   
+        }
+
+        [HttpGet]           
         public ActionResult Login()
-        {           
-            return View();
+        {
+            //UserLogin user = new UserLogin();
+            //ViewData["PersonName"] = "Test Name";
+            //ViewBag.PersonName = "Test Name";
+            //return View(user);           
+            //UserLogin data = new UserLogin()
+            // {
+            //     Emailid = "jitendranoida22@gmail.com",
+            //     Password = "123"               
+            // };
+            // TempData["mydata"] = data;
+             //string url=string.Format("/Home/Index?EmailId={0}&Password={1}",data.Emailid,data.Password);
+             //return Redirect(url);
+             //return RedirectToAction("Index", "Home", new { userId = "jitendranoida22@gmail.com" ,password="123"});
+             //return RedirectToAction("Index", "Home");
+             return View();
         }
         
         [HttpPost]
-        public ActionResult Login(UserLogin SignUser)
+        public ActionResult Login(UserLogin SignUser)//(string username)//(FormCollection frm)//UserLogin SignUser)
         {
-           string result = "";
-           if(ModelState.IsValid)
+
+           // return View();
+            //return Content(user.Emailid.ToString());
+            //string strName = Convert.ToString(username);
+            //FormCollection frm = new FormCollection();
+            //string strName = Request["username"].ToString();
+            //string str = frm["username"].ToString();
+            //string strName = frms["username"].ToString();
+            //return View();
+            string result = "";
+            if (ModelState.IsValid)
             {
                 DataAccessLayer.DBdata objDB = new DataAccessLayer.DBdata(); //calling class DBdata
-                result = objDB.UserLogin(SignUser);              
+                result = objDB.UserLogin(SignUser);
             }
-           if (result == "Validuser")
+            if (result == "Validuser")
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                return View(); 
+                return View();
             }
         }
-
         //public EmptyResult FileUploading(HttpPostedFileBase postedFile)
         //{
         //    if (postedFile != null)

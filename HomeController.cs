@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdminPannel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,17 @@ namespace AdminPannel.Controllers
     {
         public ActionResult Index()
         {
+            //string strName = Request["userId"].ToString();
+            //string pass = Request["password"].ToString();
+
+            //string url = string.Format("/User/Login?EmailId={0}", "jitendranoidda333");
+            // return Redirect(url);
+
+            //UserLogin data = TempData["mydata"] as UserLogin;
+            //string strName = data.Emailid;
+            //string pass = data.Password;
             return View();
+          
         }
         public ActionResult LogOff()
         {
