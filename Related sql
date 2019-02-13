@@ -6,3 +6,6 @@ As
 Begin  		
 	   select 'Validuser' from  tbl_UserRegister where EmailId=@EmailId and Password=@Password 		
 End
+
+
+https://www.codeproject.com/Articles/758458/Passing-Data-View-to-Controller-Controller-to-View
