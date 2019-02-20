@@ -1,0 +1,34 @@
+Alter PROCEDURE MyStoredProcedure
+      @Username VARCHAR(100)
+	  ,@OutputParam VARCHAR(100) OUTPUT 
+	  --,@InputOutputParam INT OUTPUT
+AS
+BEGIN
+    --UserName,EmailId,MobileNo,UserType,Password,User_pic,City,Country,State,IsActive
+    --SELECT * FROM tbl_UserRegister WHERE UserName = 'jjayswal' AND id = 17
+    --IF EXISTS(SELECT * FROM tbl_UserRegister WHERE UserName = @Username AND id = @InputOutputParam)
+  IF EXISTS(SELECT * FROM tbl_UserRegister WHERE UserName = @Username)
+    BEGIN                
+             --SELECT @OutputParam = MAX(Id), @InputOutputParam = MAX(id) FROM tbl_UserRegister WHERE UserName = @Username
+				 
+		     --set @InputOutputParam =(select MAX(id) FROM tbl_UserRegister WHERE UserName = @Username)	
+		     --set @OutputParam =(select max(id) FROM tbl_UserRegister WHERE UserName = @Username)	
+		  	  		 
+		     set @Username =(select UserName FROM tbl_UserRegister WHERE UserName = @Username)
+			 		   
+		     --declare @i int=0,@j int=1
+
+		     -- select 1/0
+
+		     insert into tvl values(len(@Username)+10,@Username)
+			 			   
+			 --select * from tvl 
+		     --insert into tvl values(len(@Username),@Username)          
+		     --RETURN 101 
+    END
+    ELSE
+    BEGIN
+          RETURN 8
+		  --set @OutputParam =''
+    END        
+END
