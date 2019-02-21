@@ -1,0 +1,240 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProgrammingTest
+{
+    class ReplaceNigthbourChar
+    {
+        static void Main()
+        {
+            #region Problem 1
+            ////solution 1              
+            //string input1 = "AXBYC"; //Sample String
+            ////ouput is "XAYBC"
+            //char[] ch1 = input1.ToCharArray();          
+            //string str21 = string.Empty;
+            ////Index is 4
+            ////Count is 5
+            ////ch1[0]='A',ch1[1]='X',ch1[2]='B',ch1[3]='Y',ch1[4]='C'
+            //for (int i = 0; i < ch1.Length; i++)
+            //{
+            //    //"AXBYC"
+            //    //TRUE I=0,2,4
+            //    //FALSE I=1,3
+            //    if (i % 2 == 0) 
+            //    {
+            //        //I=0,2,4  
+            //        if ((i + 1) < ch1.Length)
+            //        {                                    
+            //            str21 += ch1[i + 1];
+            //            //fresh string is str21 ='X'  
+            //            //str21 ='XAY' 
+            //        }
+            //        str21 += ch1[i];
+            //        //fresh string is str21 ='XAYB'     
+            //    } 
+            //}
+            //Console.WriteLine(str21);
+            ////solution 2              
+            //string input = "AXBYC"; //Sample String
+            //char[] ch = input.ToCharArray();
+            //char[] ch2 = input.ToCharArray();           
+            //for (int i = 0; i < ch.Length; i++)
+            //{
+            //    if (i % 2 == 0)
+            //    {
+            //        if ((i + 1) < ch.Length)
+            //        {
+            //            ch[i] = ch2[i + 1];
+            //            ch[i + 1] = ch2[i];
+            //        }
+            //    }
+            //}
+            //Console.WriteLine(ch);
+            #endregion
+
+            #region problem 2
+            //problem 2 
+            //change in upper case of odd position character in string
+            //string prb = "shipment book";
+            //char[] ch = prb.ToCharArray();
+            //string str = string.Empty;
+            //for (int i = 0; i < ch.Length; i++)
+            //{
+            //    if (i % 2 != 0)
+            //    {
+            //        str += Convert.ToString(ch[i]).ToUpper();
+            //    }
+            //    else 
+            //    {
+            //        str += Convert.ToString(ch[i]); 
+            //    }               
+            //}
+            //Console.WriteLine(str);
+            #endregion
+
+            #region problem 3
+            //problem 3
+            //Do upper case first char of string
+            //1 step get string into arr list
+            //2 step get string index wise
+            //3 step get 0 index char of 0 index string
+            //4 step 
+            //string str="shipment is not booked";
+            //string[] arry = str.Split(' ');
+            //string str2 = string.Empty;
+            //for (int i = 0; i < arry.Length; i++)
+            //{
+            //    str2 += Convert.ToString(arry[i]).Substring(0,1).ToUpper() + Convert.ToString(arry[i]).Substring(1, arry[i].Length-1) + " ";
+            //   //str2 += arry[i].Substring(0) + arry[0].Substring(1,arry[i].Length); 
+            //}
+            //Console.WriteLine(str2);
+            #endregion
+
+            #region problem 3 without predefind method
+            ////problem 3 without predefind method
+            //string str="shipment is not booked";           
+            //string str2 = string.Empty;
+            //for (int i = 0; i < str.Length; i++)
+            //  {
+            //         int ascival = i == 0 ? (str[i] != ' ' ? (byte)str[i] : 32) : (str[i] == ' ' ? 32 : (byte)str[i]); //All CHAR SHOULD BE CAPITAL  
+            //         switch(ascival)
+            //         {
+            //             case 32:
+            //                 str2 += " ";
+            //                 break;                      
+            //             case 97:
+            //                 str2 +="A";
+            //                 break;
+            //             case 98:
+            //                 str2 +="B";
+            //                 break;
+            //             case 99:
+            //                 str2 +="C";
+            //                 break;
+            //             case 100:
+            //                 str2 +="D";
+            //                 break;
+            //             case 101:
+            //                 str2 +="E";
+            //                 break;
+            //             case 102:
+            //                 str2 +="F";
+            //                 break;
+            //             case 103:
+            //                 str2+="G";
+            //                 break;
+            //             case 104:
+            //                 str2+="H";
+            //                 break;
+            //             case 105:
+            //                 str2+="I";
+            //                 break;
+            //             case 106:
+            //                 str2 +="J";
+            //                 break;
+            //             case 107:
+            //                 str2 +="K";
+            //                 break;
+            //             case 108:
+            //                 str2+="L";
+            //                 break;
+            //             case 109:
+            //                 str2 +="M";
+            //                 break;
+            //             case 110:
+            //                 str2 +="N";
+            //                 break;
+            //             case 111:
+            //                 str2 +="O";
+            //                 break;
+            //             case 112:
+            //                 str2 +="P";
+            //                 break;
+            //             case 113:
+            //                 str2 +="Q";
+            //                 break;
+            //             case 114:
+            //                 str2 +="R";
+            //                 break;
+            //             case 115:
+            //                 str2 +="S";
+            //                 break;
+            //             case 116:
+            //                 str2 +="T";
+            //                 break;
+            //             case 117:
+            //                 str2 +="U";
+            //                 break;
+            //             case 118:
+            //                 str2 +="V";
+            //                 break;
+            //             case 119:
+            //                 str2 +="W";
+            //                 break;
+            //             case 120:
+            //                 str2 +="X";
+            //                 break;
+            //             case 121:
+            //                 str2 +="Y";
+            //                 break;
+            //             case 122:
+            //                 str2 +="Z";
+            //               break;
+            //              default:
+            //                str2 += str[i];
+            //                break;
+            //         } 
+            //}
+            //Console.WriteLine(str2);
+            #endregion
+
+            #region problem 4 problem do first char capital on every words
+            ////problem do first char capital
+            //string str4 = "shipment booking details";
+            //string str5 = string.Empty;
+            //string[] strarry = str4.Split(' ');
+            //for (int k = 0; k < strarry.Length; k++)
+            //{
+            //    str5 += strarry[k].Substring(0, 1).ToUpper() + strarry[k].Substring(1, strarry[k].Length - 1) + " ";
+            //    //str5 += strarry[k].Substring(1, strarry[k].Length-1) + " ";      
+            //}
+            //Console.WriteLine(str5);
+            #endregion
+
+            #region do reverse every word in a string without predefind method
+            ////do reverse every word in a string without predefind method
+            //string str = "this in new shipment";
+            ////output is "tnempihs wen ni sih";
+            //string str2 = "";        
+            //for (int i = str.Length-1; i>=0; i--)
+            //{
+            //    //char cc =str[i];
+            //    //int acc = (byte)str[i];
+            //    str2 += str[i];
+            //}
+            //Console.WriteLine(str2);
+            #endregion
+
+            #region testing
+            //byte num = 100;           
+            //dynamic val = num;
+            //dynamic val2 = num;
+            //val2 = "string";
+            //object val2 = "jitendra";
+            //val2 = 100;
+           // short val2 = 100;
+           // val2 = 200;
+           //// Console.WriteLine(val.GetType());
+           // Console.WriteLine(val2.GetType());
+           // Console.WriteLine(val2.GetTypeCode());
+           // Console.WriteLine(val2.GetHashCode()); 
+            #endregion
+
+            Console.ReadLine();
+        }
+    }
+}
