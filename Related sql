@@ -9,3 +9,9 @@ End
 
 
 https://www.codeproject.com/Articles/758458/Passing-Data-View-to-Controller-Controller-to-View
+
+
+
+
+-----------------Meeting sql query
+select sno, (case  when CONVERT(varchar(40),MeetingDate,106)= CONVERT(varchar(40),dateadd(d,0,getdate()),106) Then 'Today is Your Meeting Date'	when CONVERT(varchar(40),MeetingDate,106)=CONVERT(varchar(40),dateadd(d,1,getdate()),106) Then  'Tomorrow is Your Meeting Date' else  'Your Meeting Date On ' + cast(CONVERT(varchar(40),MeetingDate,106) as varchar) end) as Notifymsg	from RegistrationVisitingCustomer where MeetingDate BETWEEN CONVERT(varchar(40),dateadd(d,0,getdate()),106) AND CONVERT(varchar(40),dateadd(d,30,getdate()),106)  and sno=1
