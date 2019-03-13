@@ -1,0 +1,15 @@
+---**********PROBLEM   WITH CONST READONLY STATIC********---
+que1.>can i create constructor inside partial class
+Ans.Yes
+que2.>can i pass parameter as dynamic and var
+Ans.No
+que3.>can i declare var on class level
+Ans.No
+que4.>can i change const type value in c#
+Ans.Never during whole programming excution 
+
+que5.>can i change readonly type value in c#
+Ans.Once during whole programming excution throught constructor only
+
+que6.>can i change static type value in c#
+Ans.Yes you change every time during whole programming excution throught constructor only

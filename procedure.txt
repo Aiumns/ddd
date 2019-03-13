@@ -1,0 +1,50 @@
+--drop proc [dbo].[SP_ExhibitionlSheet_Uploading]
+CREATE proc [dbo].[SP_ExhibitionlSheet_Uploading]
+     @ExhibitionlSheet_Uploading [dbo].[Type_ExhibitionlSheet_Uploading]  READONLY    
+AS 
+Begin
+   if exists(select * from sys.columns where name='Sno' and object_id in (select object_id from sys.tables where name like '%ExhibitorsList%'))
+     Begin
+
+             alter table ExhibitorsList drop column Sno			 		   
+
+		     insert into  [dbo].[ExhibitorsList](ExbName,ContactNo,Email,Address,Area,PinCode,FairName)  select ExbName,ContactNo,Email,Address,Area,PinCode,FairName FROM @ExhibitionlSheet_Uploading 
+
+			 alter table ExhibitorsList add Sno int identity(1,1)				
+
+     End
+
+	 else
+
+	 Begin
+
+	        insert into  [dbo].[ExhibitorsList](ExbName,ContactNo,Email,Address,Area,PinCode,FairName)  select ExbName,ContactNo,Email,Address,Area,PinCode,FairName FROM @ExhibitionlSheet_Uploading 
+
+	        alter table ExhibitorsList add Sno int identity(1,1)
+
+	 End
+
+End
+
+  -- alter table [dbo].[tbl2] drop column Sno
+
+  --select * from [dbo].[ExhibitorsList]
+
+  
+
+  --truncate table [dbo].[ExhibitorsList]
+
+  --insert into  [dbo].[tbl2](ExbName,ContactNo,Email,Address,Area,PinCode,FairName)  select ExbName,ContactNo,Email,Address,Area,PinCode,FairName from  [dbo].[ExhibitorsList]
+
+  -- alter table [dbo].[tbl2] add Sno int identity(1,1)  --FairName varchar(100)
+
+  --ExbName	ContactNo	Email	Address	Area	PinCode	FairName
+
+  --select * from sys.schemas where schema_id=1
+
+  --select * from sys.tables where name like '%ExhibitorsList%'
+
+  --There is already an object named 'ExhibitorsList' in the database.
+
+------------------------------**********************************------------------------------
+------------------------------*************------------------------------

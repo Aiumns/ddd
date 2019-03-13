@@ -1,0 +1,54 @@
+CREATE TABLE Employee_pivote  
+(  
+Name [nvarchar](max),  
+[Year] [int] ,  
+Sales [int]  
+) 
+
+INSERT INTO Employee_pivote  
+SELECT 'Pankaj',2010,72500 UNION ALL  
+SELECT 'Rahul',2010,60500 UNION ALL  
+SELECT 'Sandeep',2010,52000 UNION ALL  
+SELECT 'Pankaj',2011,45000 UNION ALL  
+SELECT 'Sandeep',2011,82500 UNION ALL  
+SELECT 'Rahul',2011,35600 UNION ALL  
+SELECT 'Pankaj',2012,32500 UNION ALL  
+SELECT 'Pankaj',2010,20500 UNION ALL  
+SELECT 'Rahul',2011,200500 UNION ALL  
+SELECT 'Sandeep',2010,32000  
+
+------------******Pivoting Sample 1*******-----------
+SELECT [Year], Pankaj,Rahul,Sandeep FROM   Employee_pivote  Tab1   --(SELECT Name, [Year] , Sales FROM Employee_pivote)  
+
+	PIVOT  
+	 (  
+	   SUM(Sales) FOR Name IN (Pankaj,Rahul,Sandeep)
+	 )
+
+	 AS Tab2 
+ 
+ORDER BY [Tab2].[Year] 
+
+------------******Pivoting Sample 2*******----------- 
+create table #stu(name varchar(100),score numeric,[Year] numeric)
+
+insert into #stu values(null,null,2005),('a',200,2005),('a',500,2005),('b',500,2005),('b',700,2005),('b',1000,2005),
+('c',800,2005),('c',700,2005),('c',3000,2005),('d',200,2005),('d',700,2005),('d',600,2005),
+('a',100,2006),('a',200,2006),('a',500,2006),('b',500,2006),('b',700,2006),('b',1000,2006),
+('c',800,2006),('c',700,2006),('c',3000,2006),('d',200,2006),('d',700,2006),('d',600,2006)
+
+select distinct name from #stu
+
+select * from #stu t1
+
+pivot
+	(
+	  sum(score) for name in(a,b,c,d) 
+	) 
+	
+	as t2
+
+order by t2.Year
+
+
+

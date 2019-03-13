@@ -1,0 +1,14 @@
+---**********PROBLEM   WITH VAR DYNAMIC OBJECT********---
+Remember .>Anonymous type can be defined using the new keyword and object initializer syntax.
+
+Remember .>The implicitly typed variable- var, is used to hold an anonymous type.
+
+Remember .>Anonymous type is a reference type and all the properties are read-only.
+
+Remember .>The scope of an anonymous type is local to the method where it is defined.
+
+Que1.>
+Ans. C# - Anonymous Type. Anonymous type, as the name suggests, is a type that doesn't have any name. C# allows you to create an object with the new keyword without defining its class. The implicitly typed variable- var is used to hold the reference of anonymous types.
+
+NOTE.>
+An anonymous type is a temporary data type that is inferred based on the data that you include in an object initializer. Properties of anonymous types will be read-only properties so you cannot change their values.

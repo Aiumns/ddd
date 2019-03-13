@@ -1,0 +1,15 @@
+USE [PaceTestDb]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[Type_ExhibitionlSheet_Uploading]    Script Date: 3/13/2019 4:13:55 PM ******/
+CREATE TYPE [dbo].[Type_ExhibitionlSheet_Uploading] AS TABLE(
+	[ExbName] [varchar](300) NULL,
+	[ContactNo] [varchar](300) NULL,
+	[Email] [varchar](300) NULL,
+	[Address] [varchar](max) NULL,
+	[Area] [varchar](300) NULL,
+	[PinCode] [varchar](300) NULL,
+	[FairName] [varchar](300) NULL
+)
+GO
+
