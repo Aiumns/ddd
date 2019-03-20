@@ -1,0 +1,8 @@
+https://www.dotnetcurry.com/jquery/1275/jquery-event-handling-difference-between-bind-live-delegate-on
+
+//jquery diffrent versions
+https://developers.google.com/speed/libraries/#jquery
+
+
+Note:>
+The main difference between live() and delegate() is that live() did not support DOM traversal, whereas delegate supported binding of events to specific DOM elements.
