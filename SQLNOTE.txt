@@ -1,0 +1,24 @@
+Note.
+The GROUP BY Clause is used to group rows with same values . The GROUP BY Clause is used together with the SQL SELECT statement. The SELECT statement used in the GROUP BY clause can only be used contain column names, aggregate functions, constants and expressions
+
+Que1.>Can group functions be used in where clause?
+Ans.
+HAVING is like WHERE with aggregate functions, or you could use a subquery. You can't use an aggregate directly in a WHERE clause; that's what HAVING clauses are for. You can use a sub-query which contains an aggregate in the WHERE clause
+
+Que2.>Can we create view on temporary table in SQL Server?
+Ans.
+No, a view consists of a single SELECT statement. You cannot create or drop tables in a view. Maybe a common table expression (CTE) can solve your problem. CTEs are temporary result sets that are defined within the execution scope of a single statement and they can be used in views.
+
+Que3.>Why we use merge statement in SQL?
+Ans.
+The MERGE statement is used to make changes in one table based on values matched from anther. It can be used to combine insert, update, and delete operations into one statement.
+
+Que4.>why only one clustered index can be created on a table?
+Ans.A clustered index sorts and stores the data rows in the table based on the index key values. Therefore only one clustered index can be created on each table because the data rows themselves can only be sorted in one order.
+
+Que5.>Can we create clustered index on multiple columns?
+Ans.You can have up to 16 key columns in a clustered index, but the column sizes have to add up to less than 900 bytes. You can only have one clustered index per table, though it doesn't have to be unique. Your command works because it's only creating one clustered index that consists of two columns
+
+Que6.>What is the difference between clustered index and non clustered index?
+Ans.Clustered Index. A clustered index defines the order in which data is physically stored in a table. Table data can be sorted in only way, therefore, there can be only one clustered index per table. In SQL Server, the primary key constraint automatically creates a clustered index on that particular column
+Que7.>Can we create clustered index on null value column?
