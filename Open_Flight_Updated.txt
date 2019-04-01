@@ -1,0 +1,188 @@
+--drop proc [db_owner].[Insert_OpenFlight_2]
+Create proc [db_owner].[OpenFlight_Proc]
+     @tableflight_type Insert_OpenFlight_type2 READONLY,
+	 @OutputOpenflightidwith_comma varchar(max) output
+     as
+	 declare @inserr int  
+	 declare @upterr int  
+	 declare @maxerr int  
+	 --declare updateflightcode_Cur cursor
+	 declare @flight_id varchar(100),@Flight_Open_ID int
+
+	 declare @tbl as table(FlightOpenID int,flightid int)
+	 set @maxerr = 0  
+
+     BEGIN TRANSACTION
+
+	 insert into flight_open(Flight_Booking_Code,Flight_ID,Flight_Day,Flight_Date,Flight_Time,Open_Capacity,Open_Date,Close_Date,Status,Entered_By,Entered_On,
+	 
+	 EGM,IGM,ATA,ATD,CNMT,No_of_passenger,PAX,Import_Flight_Open_ID,Last_Modified_By,Last_Modified_On)
+     
+	 output inserted.Flight_Open_ID,inserted.Flight_ID into @tbl
+
+	 select Flight_Booking_Code,Flight_ID,Flight_Day,Flight_Date,Flight_Time,Open_Capacity,Open_Date,Close_Date,Status,Entered_By,Entered_On,
+	 NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'admin',GETDATE() from  @tableflight_type
+	
+	 --Save error number returned from Insert statement  
+	 set @inserr = @@error  
+	 if @inserr > @maxerr  
+	 set @maxerr = @inserr
+
+	 DECLARE @List VARCHAR(8000)
+     SELECT @List = COALESCE(@List + ',', '') + cast(FlightOpenID as varchar) FROM   @tbl
+     set @OutputOpenflightidwith_comma= @List 
+
+	 DECLARE updateflightcode_Cur CURSOR FOR select FlightOpenID,flightid from @tbl
+
+	 Open updateflightcode_Cur
+	 fetch  next  from updateflightcode_Cur into @Flight_Open_ID,@flight_id  
+	 while @@FETCH_STATUS=0
+	 Begin
+	       update Flight_Open set Flight_Booking_Code=[db_owner].[Udf_FlightBookingCode](@flight_id) where flight_Open_id=@Flight_Open_ID		    
+		   fetch  next  from updateflightcode_Cur into @Flight_Open_ID,@flight_id  
+	 End
+
+	CLOSE updateflightcode_Cur;  
+    DEALLOCATE updateflightcode_Cur;  
+	
+	--Save error number returned from Update statement  
+	set @upterr = @@error  
+	if @upterr > @maxerr  
+	set @maxerr = @upterr 
+
+	-- If an error occurred, roll back  
+	if @maxerr <> 0  
+	begin  
+	  ROLLBACK  
+	  print 'Transaction rolled back'  
+	end  
+	else  
+	begin  
+	  COMMIT  
+	  print 'Transaction committed'  
+	end  
+	  print 'INSERT error number:'+ cast(@inserr as nvarchar(8))  
+	  print 'Update error number:'+ cast(@upterr as nvarchar(8))  
+	  return @maxerr
+
+
+------------------------------------------------------------------------------
+Alter function [dbo].[Udf_FlightBookingCode]
+(
+  @flight_id int 
+) RETURNS varchar(max)
+Begin
+       declare @code1 varchar(100),@code varchar(100), @d int
+	   if exists(select isnull(max(flight_booking_Code),0) from flight_open where SubString(flight_booking_code,0,4) =(select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id)))) 
+	   Begin
+	                    set @code1 = (select isnull(max(flight_booking_Code),0) from flight_open where SubString(flight_booking_code,0,4) =(select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id))))                        
+						if Exists(select isnull(max(abs(cast(SubString(Flight_booking_code,4,50)as int))),1) from flight_open where SubString(flight_booking_code,0,4) =(select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id))))
+						Begin
+							    set @d = (select isnull(max(abs(cast(SubString(Flight_booking_code,4,50)as int))),1) from flight_open where SubString(flight_booking_code,0,4) =(select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id)))) + 1;         																							
+								set @code = (SELECT top 1 value FROM Udf_split_string_to_column(@code1,'-')) + '-' + cast(@d as varchar(100));  
+						End
+	   End  
+	   else
+	   Begin                    
+						if Exists(select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id)))
+						Begin
+								set @code = (select airline_Code from airline_master where airline_ID=(select airline_ID from  airline_detail where airline_detail_id=(select airline_detail_id from flight_master where flight_id=@flight_id))) + '-' + cast(1 as varchar(100));								
+						End
+	   End  
+	   return @code          
+End
+
+-------------------------------------------------------
+CREATE FUNCTION [db_owner].[Udf_split_string_to_column](
+    @string VARCHAR(MAX),
+    @delimiter CHAR(1)
+    )
+RETURNS @out_put TABLE (
+    [id] INT IDENTITY(1, 1) NOT NULL,
+    [value] VARCHAR(MAX)
+    )
+AS
+BEGIN
+    DECLARE @value VARCHAR(MAX),
+        @pos INT = 0,
+        @len INT = 0
+    SET @string = CASE 
+    WHEN RIGHT(@string, 1) != @delimiter
+        THEN @string + @delimiter
+    ELSE @string
+    END
+    WHILE CHARINDEX(@delimiter, @string, @pos + 1) > 0
+    BEGIN
+        SET @len = CHARINDEX(@delimiter, @string, @pos + 1) - @pos
+        SET @value = SUBSTRING(@string, @pos, @len)
+        INSERT INTO @out_put ([value])
+        SELECT LTRIM(RTRIM(@value)) AS [column]
+        SET @pos = CHARINDEX(@delimiter, @string, @pos + @len) + 1
+    END
+    RETURN
+END
+
+
+------------------------------c#
+
+                DataTable myOpenFlighttable = new DataTable(); //creating datatable   
+                myOpenFlighttable.Columns.Add("Flight_Booking_Code", typeof(string));
+                myOpenFlighttable.Columns.Add("Flight_ID", typeof(int));
+                myOpenFlighttable.Columns.Add("Flight_Day", typeof(string));
+                myOpenFlighttable.Columns.Add("Flight_Date", typeof(DateTime));
+                myOpenFlighttable.Columns.Add("Flight_Time", typeof(string));
+                myOpenFlighttable.Columns.Add("Open_Capacity", typeof(string));
+                myOpenFlighttable.Columns.Add("Open_Date", typeof(DateTime));
+                myOpenFlighttable.Columns.Add("Close_Date", typeof(DateTime));
+                myOpenFlighttable.Columns.Add("Status", typeof(int));
+                myOpenFlighttable.Columns.Add("Entered_By", typeof(string));
+                myOpenFlighttable.Columns.Add("Entered_On", typeof(DateTime));  
+
+            //Add Row 
+                           DataRow rw = myOpenFlighttable.NewRow(); //Creating Row  
+                             rw["Flight_Booking_Code"] = maxidennt + "-"+ counter;//FBookingCode; //assigning value to the ow 
+                             rw["Flight_ID"] =Convert.ToInt32(dr[0].ToString());
+                             rw["Flight_Day"] = s;
+                             rw["Flight_Date"] = Convert.ToDateTime(dt1);
+                             rw["Flight_Time"] = Convert.ToDateTime(dr[3].ToString());
+                             rw["Open_Capacity"] =dr[4].ToString();
+                             rw["Open_Date"] = openDt;
+                             rw["Close_Date"] = dt;
+                             rw["Status"] = 6;
+                             rw["Entered_By"] = Session["EMailID"].ToString();
+                             rw["Entered_On"] = openDt;
+                             myOpenFlighttable.Rows.Add(rw); //adding to datatable
+
+-----------------------------------
+  SqlConnection conobj = new SqlConnection(strCon);
+                        conobj.Open();
+                        SqlCommand comobj = new SqlCommand("[db_owner].[OpenFlight_Proc]", conobj);
+                        comobj.CommandType = CommandType.StoredProcedure;
+                        comobj.Parameters.Add("@tableflight_type", SqlDbType.Structured).Value = myOpenFlighttable;                       
+                        
+                        // Set Output Paramater
+                        SqlParameter OutputParam = new SqlParameter("@OutputOpenflightidwith_comma",                   SqlDbType.VarChar, 8000);
+                        OutputParam.Direction = ParameterDirection.Output;
+                        comobj.Parameters.Add(OutputParam);
+                        
+                        //Set ReturnValue Parameter
+                        SqlParameter RetParam = new SqlParameter("ReturnValue", DBNull.Value);
+                        RetParam.Direction = ParameterDirection.ReturnValue;
+                        comobj.Parameters.Add(RetParam);
+                        comobj.ExecuteNonQuery();
+                        comobj.Dispose();
+                        conobj.Close();
+                        int IntReturn = Convert.ToInt32(comobj.Parameters["ReturnValue"].Value);
+                        if (IntReturn == 0)
+                        {
+                            str = Convert.ToString(comobj.Parameters["@OutputOpenflightidwith_comma"].Value);
+                        }
+                        else
+                        {
+                                   
+                        }
+
+
+
+
+
