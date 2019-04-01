@@ -1,0 +1,19 @@
+Private constructors are used to prevent creating instances of a class when there are no instance fields or methods, such as the Math class, 
+or when a method is called to obtain an instance of a class. If all the methods in the class are static, 
+consider making the complete class static
+
+A private constructor is a special instance constructor. It is commonly used in classes that contain static members only. 
+This type of constructors is mainly used for creating singleton object. If you don't want 
+the class to be inherited we declare its constructor private.
+
+What is the difference between static and private constructor?
+
+A static constructor cannot access non-static members. It executes before the first instance of a class. ... 
+However, Private Constructor is used to restrict a class to be instantiated and to 
+be inherited. Private Constructor is used whenever a class contains only static members.
+
+When would you use a private constructor?
+
+A singleton is a design pattern that allows only one instance of your class to be created, 
+and this can be accomplished by using a private constructor. 
+Yes and it is used to prevent instantiation and subsequently overriding. This is most often used in singleton classes.
