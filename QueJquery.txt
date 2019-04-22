@@ -1,0 +1,42 @@
+--------------************ Find Control Jquery Without Id and Name******------------
+----Find Chechbox anywhere in DOM
+
+$(":checkbox")[0]
+
+$("input:[type=checkbox]")[0]
+
+$("input:[type='checkbox']")[0]
+
+----Find Textbox anywhere in DOM
+
+$(":text")[0]   --On 0 index control
+
+$("input:[type=text]")[0] --On 0 index control
+
+$("input:[type='text']")[0] --On 0 index control
+
+----Find Dropdownlist anywhere in DOM 
+     $("select")[0]   --using Tag with index
+
+---Find Any Input Control Using Index No.
+$(":input")[0]
+
+--How to find first control out of 5 having same class
+   $(".clss")[0]  --using class with index
+
+--How To find Current selected option of chechbox and dropdownlistbox in Whole document.
+
+dd(":checked")[0]  --using Index
+
+
+
+
+
+
+
+
+
+
+
+
+
