@@ -1,0 +1,65 @@
+<%@ WebHandler Language="C#" Class="Check_ExistingCustomer" %>
+using System;
+using System.Web;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Collections.Generic;
+using System.Web.Script.Services;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Data.SqlClient;
+using System.Xml;
+using System.Text;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Web.SessionState;
+public class Check_ExistingCustomer : IHttpHandler,IRequiresSessionState {
+    SqlDataReader dr;
+    SqlConnection con;
+    SqlCommand com;
+    SqlCommand cmd;
+    string responseData = string.Empty;
+    string strCon = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;     
+    public void ProcessRequest (HttpContext context) {
+        context.Response.ContentType = "text/plain";
+        DisplayWrap dw = new DisplayWrap();
+        string Custname = Convert.ToString(context.Request.QueryString["customername"]);
+        int sessionVar = context.Session["Compbrsno"] != null? Convert.ToInt32(context.Session["Compbrsno"].ToString()):0;
+        string sql = "select CustomerName from customermaster where CustomerName='" + Custname + "' and CompBrNo =" + sessionVar + "";
+        try
+        {
+            string str = Cfi.App.Pace.Common.PaceCommon.ConnectionString;
+            SqlConnection con = new SqlConnection(str);
+            SqlCommand cmd = new SqlCommand(sql, con);
+            con.Open();
+            SqlDataReader reader;
+            reader = cmd.ExecuteReader();
+            string responseData = string.Empty;
+            System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
+            System.Collections.Generic.List<object> objList = new System.Collections.Generic.List<object>();
+            while (reader.Read())
+            {
+                objList.Add(new { CustomerName = reader["CustomerName"] });
+            }
+            var items = new { items = objList };
+            cmd.Dispose();
+            string jsonstring = js.Serialize(items);
+            HttpContext.Current.Response.Write(jsonstring);
+        }
+        catch (Exception e)
+        {
+            context.Response.Write("-1");
+        }
+    }  
+    public bool IsReusable
+    {
+        get
+        {
+            return false;
+        }
+    }
+}

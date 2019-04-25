@@ -1,0 +1,80 @@
+<%@ Register Src="~/WebUserControl.ascx" TagName="jj" TagPrefix="Usr" %>
+
+
+
+        //Load the complete control   
+        UserControl _dummyUserControl = (UserControl)Page.LoadControl("UserControl_Wel.ascx");
+        pnlDynamicControl.Controls.Add(_dummyUserControl);
+
+
+        //Access only control value
+        
+
+        //Find Control from master page
+        //TextBox txt = this.Parent.FindControl("txtVisitorName") as TextBox;
+
+
+
+
+protected Page GetParentPage( Control control )
+{
+    if (this.Parent is Page)
+        return (Page)this.Parent;
+
+    return GetParentPage(this.Parent);
+}
+
+/////////////////////////////////
+You cannot get the property of parent page but you can get the Controls value like this. I am setting the property value in HiddenField and finding 
+the HiddenField value in UserControl PageLoad event.
+
+HTML:
+
+ASPX:
+<form id="form1" runat="server">
+<div>
+    <uc:TextBox runat="server"></uc:TextBox>       
+    <asp:HiddenField ID="hdName" runat="server" />
+</div>
+</form>
+ASPX C#:
+public string Name
+{
+    set
+    {        
+        this.hdName.Value = value;
+    }
+}
+ 
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (!this.IsPostBack)
+    {
+        this.Name = "Shaikh Azimuddin";
+    }
+}
+
+ASCX:
+<asp:TextBox ID="txtName" runat="server" />
+<asp:Button Text="Submit" runat="server"/>
+
+ASCX C#:
+
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (!this.IsPostBack)
+    {
+        this.txtName.Text = ((this.Parent.Page).FindControl("hdName") as HiddenField).Value; 
+    }
+}
+
+Register UserControl
+
+<%@ Register Src="~/UserControl/UC_TextBox.ascx" TagName="TextBox" TagPrefix="uc" %>
+
+/////////////////////////////////////***********You Can Access Direct User Control Without Register*************
+        Control _dummyUserControl = (Control)Page.LoadControl("WebUserControl.ascx");
+        pnlDynamicControl.Controls.Add(_dummyUserControl);
+        OR
+        UserControl _dummyUserControl = (UserControl)Page.LoadControl("WebUserControl.ascx");
+        pnlDynamicControl.Controls.Add(_dummyUserControl);

@@ -1,0 +1,92 @@
+https://www.c-sharpcorner.com/article/difference-among-cte-derived-table-temp-table-sub-query/
+
+https://www.dotnettricks.com/learn/sqlserver/difference-between-cte-and-temp-table-and-table-variable
+
+
+CTE - Common Table Expressions
+
+CTE stands for Common Table Expressions. It was introduced with SQL Server 2005. It is a temporary result set and typically it may be a result of complex sub-query. Unlike the temporary table, its life is limited to the current query. It is defined by using WITH statement. CTE improves readability and ease in maintenance of complex queries and sub-queries. Always begin CTE with a semicolon.
+
+A subquery without CTE is given below :
+SELECT * FROM (
+ SELECT Addr.Address, Emp.Name, Emp.Age From Address Addr
+ Inner join Employee Emp on Emp.EID = Addr.EID) Temp
+WHERE Temp.Age > 50
+ORDER BY Temp.NAME
+By using CTE above query can be re-written as follows :
+;With CTE1(Address, Name, Age)--Column names for CTE, which are optional
+AS
+(
+SELECT Addr.Address, Emp.Name, Emp.Age from Address Addr
+INNER JOIN EMP Emp ON Emp.EID = Addr.EID
+)
+SELECT * FROM CTE1 --Using CTE 
+WHERE CTE1.Age > 50
+ORDER BY CTE1.NAME
+When to use CTE?
+This is used to store the result of a complex subquery for further use.
+
+This is also used to create a recursive query.
+
+Temporary Tables
+In SQL Server, temporary tables are created at run-time and you can do all the operations which you can do on a normal table. These tables are created inside the Tempdb database. Based on the scope and behavior temporary tables are of two types as given below-
+
+Local Temp Table
+Local temp tables are only available to the SQL Server session or connection (means single user) that created the tables. These are automatically deleted when the session that created the tables has been closed. The local temporary table name is stared with a single hash ("#") sign.
+
+CREATE TABLE #LocalTemp
+(
+ UserID int,
+ Name varchar(50), 
+ Address varchar(150)
+)
+GO
+insert into #LocalTemp values ( 1, 'Shailendra','Noida');
+GO
+Select * from #LocalTemp
+
+The scope of Local temp table exists to the current session of the current user means to the current query window. If you will close the current query window or open a new query window and will try to find above-created temp table, it will give you the error.
+
+Global Temp Table
+Global temp tables are available to all SQL Server sessions or connections (means all the user). These can be created by any SQL Server connection user and these are automatically deleted when all the SQL Server connections have been closed. The global temporary table name is stared with double hash ("##") sign.
+
+CREATE TABLE ##GlobalTemp
+(
+ UserID int,
+ Name varchar(50), 
+ Address varchar(150)
+)
+GO
+insert into ##GlobalTemp values ( 1, 'Shailendra','Noida');
+GO
+Select * from ##GlobalTemp
+ 
+
+Global temporary tables are visible to all SQL Server connections while Local temporary tables are visible to only current SQL Server connection.
+
+Table Variable
+This acts like a variable and exists for a particular batch of query execution. It gets dropped once it comes out of the batch. This is also created in the tempdb database but not the memory. This also allows you to create a primary key, identity at the time of Table variable declaration but not non-clustered index.
+
+ GO
+ DECLARE @TProduct TABLE
+ (
+ SNo INT IDENTITY(1,1),
+ ProductID INT,
+ Qty INT
+ ) 
+ --Insert data to Table variable @Product 
+ INSERT INTO @TProduct(ProductID,Qty)
+ SELECT DISTINCT ProductID, Qty FROM ProductsSales ORDER BY ProductID ASC 
+ --Select data
+ Select * from @TProduct
+ 
+ --Next batch
+ GO
+ Select * from @TProduct --gives error in next batch
+
+NOTE:
+Temp Tables are physically created in the tempdb database. These tables act as the normal table and also can have constraints, an index like normal tables.
+
+CTE is a named temporary result set which is used to manipulate the complex sub-queries data. This exists for the scope of a statement. This is created in memory rather than the Tempdb database. You cannot create an index on CTE.
+
+Table Variable acts like a variable and exists for a particular batch of query execution. It gets dropped once it comes out of a batch. This is also created in the tempdb database but not the memory.
