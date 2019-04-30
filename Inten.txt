@@ -78,3 +78,9 @@ Register UserControl
         OR
         UserControl _dummyUserControl = (UserControl)Page.LoadControl("WebUserControl.ascx");
         pnlDynamicControl.Controls.Add(_dummyUserControl);
+        
+       //How To Access User Control Value Direct Without Register Or Call Control
+        UserControl _dummyUserControl = (UserControl)Page.LoadControl("MyWebUserControl.ascx");
+        TextBox txt = (_dummyUserControl.FindControl("txtName")).FindControl("txtName") as TextBox;
+        string val = txt.Text;
+
