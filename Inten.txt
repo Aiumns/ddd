@@ -83,4 +83,19 @@ Register UserControl
         UserControl _dummyUserControl = (UserControl)Page.LoadControl("MyWebUserControl.ascx");
         TextBox txt = (_dummyUserControl.FindControl("txtName")).FindControl("txtName") as TextBox;
         string val = txt.Text;
+        
+        
+        ////////////////////////////////////////////
+        Difference between Label and Literal controls in ASP.Net
+Label control
+1. Label control (by default) is rendered as HTML <span> Tag i.e. the Text is enclosed within the HTML <span> Tags. When AssociatedControlID property is set for the Label control it is then rendered as HTML <label> Tag i.e. the Text is enclosed within the HTML <label> Tags.
+2. Label control can be styled i.e. its Font, Color, Font Size, etc. can be easily changed.
+3. Label control can be easily accessed via JavaScript or jQuery.
+4. Generally used for displaying Text content on Web pages.
+ 
+Literal control
+1. Literal control is rendered as is i.e. it is not enclosed within any HTML Tags.
+2. Literal control cannot be styled as it does not use any HTML tag.
+3. Literal control in spite of giving ID is rendered without ID hence cannot be accessed via JavaScript or jQuery.
+4. Generally used for adding HTML content on page for example suppose you want to add HTML <div> Tag and if you would use Label it would not be correct HTML since as per W3C Standards an HTML <div> cannot be rendered within a <span> or <label> tag.
 
