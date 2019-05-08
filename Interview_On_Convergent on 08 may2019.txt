@@ -1,0 +1,40 @@
+default data type in jquery ajax
+
+Ans:   'application/x-www-form-urlencoded; charset=UTF-8'
+
+https://www.c-sharpcorner.com/UPLOADFILE/97FC7A/DIFFERENCE-BETWEEN-PROP-AND-ATTR-IN-JQUERY/
+
+https://www.w3schools.com/jquery/html_prop.asp
+
+--How to check null of dynamic type
+
+--Can i create primary key on nonconcluste index
+
+--diffrent between index and primary key
+
+--why use primary key
+
+--Can I Create primary key on non clusted key 
+
+--can i modify cludtere key
+
+Alter PROCEDURE [db_owner].[trans_tt]   
+AS 
+    BEGIN          
+        BEGIN TRY 
+            BEGIN TRANSACTION
+			--select * from [dbo].[b]
+			--truncate table [dbo].[b]
+			insert into [dbo].[b] values('aa')  
+			select 1/0 from [dbo].[b] 
+			delete from [dbo].[b]
+            COMMIT 
+        END TRY 
+        BEGIN CATCH 
+            IF ( @@ERROR <> 0 ) 
+                BEGIN 
+                    ROLLBACK
+                    SELECT 'There was an error! ' + ERROR_MESSAGE()  
+                END 
+        END CATCH	
+END 
