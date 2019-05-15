@@ -1,0 +1,43 @@
+IsCallBack is a special kind of postback.
+
+The only time IsCallBack is going to be true is if IsPostBack is also true.
+
+Therefore their is no way to get to your "Page Called Back" code. See What is the difference between Page.IsPostBack and Page.IsCallBack?
+
+The two variables can result in exactly 3 conditions:
+
+IsPostBack and IsCallBack are both false: initial page load.
+IsPostBack is true; IsCallBack is false: full postback occurred.
+IsPostBack is true; IsCallBack is true: request came from ajax.
+There is no situation in which IsPostBack will be false and IsCallBack will be true.
+
+So your code should be:
+
+if (!IsPostBack) {
+    { 
+        LblInfo.Text = "Initial Page Loaded"; 
+    } 
+} else {
+    if (IsCallback) 
+    { 
+        LblInfo.Text = "Page Called Back"; 
+    } else {
+        LblInfo.Text = "Page Posted Back";
+    }
+}
+
+
+
+“A postback is a request sent from a client to server from the same page, user is already working with.“
+
+“A callback is generally a call for execution of a function after another function has completed.”
+
+
+-------------Sql Function Limitation
+
+Cannot access temporary tables from within a function.
+
+
+
+
+
