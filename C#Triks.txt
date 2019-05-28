@@ -1,0 +1,32 @@
+///////////////C#
+ public bool SendMail(string filepath)
+    {
+        MailMessage mail = new MailMessage();
+        mail.IsBodyHtml = true;       
+        mail.From = new MailAddress("ddalal@cargoflash.com");
+        mail.To.Add("jjayswal@cargoflash.net");  
+        mail.Bcc.Add("jjayswal@cargoflash.net");      
+        mail.Attachments.Add(new Attachment(filepath));             
+        mail.Subject = " Subject Msg";
+        mail.SubjectEncoding = System.Text.Encoding.UTF8;
+        mail.BodyEncoding = System.Text.Encoding.UTF8;
+        mail.IsBodyHtml = true;
+        mail.Priority = System.Net.Mail.MailPriority.High;
+        mail.Body = "Body Msg";
+        try
+        {
+            SmtpClient smtp = new SmtpClient("mail.cargoflash.com");
+            smtp.Credentials = new NetworkCredential("test@cargoflash.net", "Admin$567");
+            smtp.Send(mail);
+            Flag = true;
+        }
+        catch 
+        { 
+
+        }
+        finally
+        {
+
+        }
+        return Flag;           
+    }
