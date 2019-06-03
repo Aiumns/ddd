@@ -1,0 +1,14 @@
+             int[] myArray = new int[] { 0, 1, 2, 3, 13, 8, 5 };
+
+            int[] resultarr=new int[7];       
+
+            int secondHighest = myArray.OrderByDescending(i => i).Distinct().Skip(1).First();  //pass n-1 in skip whatever you  need
+
+            //put it in desending order
+
+            var arr = (from arrs in myArray orderby arrs descending select arrs).ToArray();
+
+            for(int i=0; i<myArray.Length-1;i++)
+            {
+                   resultarr[i] = arr[i];  
+            }
