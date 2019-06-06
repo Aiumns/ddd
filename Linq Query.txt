@@ -1,4 +1,9 @@
-             int[] myArray = new int[] { 0, 1, 2, 3, 13, 8, 5 };
+select max(salary) from [dbo].[EmployeeMasters] emp where 1=(select COUNT(distinct salary) from [dbo].[EmployeeMasters] emp2 where emp.salary<emp2.salary)
+
+select max(salary) from [dbo].[EmployeeMasters] where salary<(select max(salary) from [dbo].[EmployeeMasters])           
+
+//////////////////////////////////////////////  
+           int[] myArray = new int[] { 0, 1, 2, 3, 13, 8, 5 };
 
             int[] resultarr=new int[7];       
 
@@ -12,3 +17,59 @@
             {
                    resultarr[i] = arr[i];  
             }
+
+///////////////*******************************
+List<Class1> emplst = new List<Class1>();
+        emplst.Add(new Class1()
+        {
+            EmpID = 1,
+            EmpName = "Sourabh",
+            EmpSalary = 50000,
+            Dept = "HR"
+        });
+        emplst.Add(new Class1()
+        {
+            EmpID = 2,
+            EmpName = "Shaili",
+            EmpSalary = 60000,
+            Dept = "IT"
+        });
+        emplst.Add(new Class1()
+        {
+            EmpID = 3,
+            EmpName = "Saloni",
+            EmpSalary = 55000,
+            Dept = "HR"
+        });
+        //var filter = from r in lst  orderby r.Dept  group e by  into grp select new { key = grp.Key, cnt = grp.Count() };
+        string strvar = string.Empty;
+
+        //query syntax
+        var filter = from ss in emplst orderby ss.Dept group ss by ss.Dept into grp select new { ddpt = grp.Key, ddptcount = grp.Count() };
+      
+        //lamda expression 
+        var aaaa = from dd in emplst.GroupBy(dd => dd.Dept) select new { ddpt = dd.Key, ddptcount = dd.Count() };
+
+        foreach (var aa in aaaa)
+        {
+            strvar += "deptname  " + aa.ddpt + "  Noofdept  " + aa.ddptcount  +"</br>";
+        }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //find 2nd highest salary
+      
+
+            //How to find out the highest salary of an Employee in each Department.
+
+            //All Emp with city name AALBORG
+            using (JoinEntities sddd = new JoinEntities())
+            {
+                var filter = from ee in sddd.EmployeeMasters join dd in sddd.DepartmentMasters on ee.DepartmentId equals dd.DepartmentId 
+                       where ee.City == "AALBORG" select new { Empname=ee.Name,City=ee.City,Dept=dd.Name };
+
+                Console.WriteLine("Employee Name\t\tCity\t\tDepartment Name");
+                foreach (var data in filter)
+                {
+                    Console.WriteLine(data.Empname + "\t\t" + data.City + "\t\t" + data.Dept);
+                }                            
+            }
+
