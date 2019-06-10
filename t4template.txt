@@ -1,0 +1,13 @@
+Que->  What is Text Template Transformation Toolkit (T4) ?
+Ans.>
+A Text Template Transformation Toolkit (T4) template is a general purpose template engine; using T4 we can generate C#, VB code, XML, HTML or text of any kind. The code generation is used in Visual Studio in technologies like MVC, Entity Framework, LINQ to SQL and many other that use those templates. The Entity Framework supports extension or manipulation of the code generation using the T4 template. In short a T4 text template is a mixture of text blocks and control logic that can be generated into a text file. The control logic is written as fragments of C# or VB program code.
+
+Now to add a T4 Template for our entity model. We have two ways to add the T4 Template for our entity model; they are:
+
+(1)Right-click on the entity model and select "Add Code Generator Item".
+Select "ADO.net Entity Object Generator" from the "Add new Item" dialog and click on the "Add" button. At this time a security warning dialog is shown to ask if  you trust the source that generated the T$ template.
+
+(2).You may also add a T4 template by right-clicking the project then select "Add new item" then select "ADO.net Entity Object Generator".
+
+
+
