@@ -1,0 +1,1 @@
+{"status":"ok","response":{"items":[{"match_id":40153,"title":"India vs Australia","subtitle":"5th ODI","format":1,"format_str":"ODI","status":2,"status_str":"Completed","status_note":"Australia won by 35 runs","verified":"true","pre_squad":"true","odds_available":"false","game_state":0,"game_state_str":"Default","domestic":"0"}]}}
