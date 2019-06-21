@@ -1,0 +1,132 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>asdsad</title>
+<meta charset="utf-8">
+<style type="text/css">
+      fieldset {
+        margin-bottom: 1em;
+      }
+      input {
+        display: block;
+        margin-bottom: .25em;
+      }
+      #print-output {
+        width: 100%;
+      }
+      .print-output-line {
+        white-space: pre;
+        padding: 5px;
+        font-family: monaco, monospace;
+        font-size: .7em;
+      }
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+</head>
+<form>
+      <fieldset>
+        <label for="target">Type Something:</label>
+        <input id="target" type="text">
+      </fieldset>
+</form>
+<button id="other">
+  Trigger the handler
+</button>
+<script type="text/javascript">
+    var xTriggered = 0;
+    $("#target").keypress(function (event) {
+        alert(event.which);
+        if ((event.which > 90 && event.which < 97) || (event.which > 90 && event.which < 97) || ) {
+           //event.preventDefault();
+        }
+        //        xTriggered++;
+        //        var msg = "Handler for .keypress() called " + xTriggered + " time(s).";
+        //        $.print(msg, "html");
+        //        $.print(event);
+    });
+    $("#other").click(function () {
+        $("#target").keypress();
+    });
+</script>
+</html>
+
+--------------------Key Code---------------
+~:126
+!:33
+@:64
+#:35
+$:36
+%:37
+^:94
+&:38
+*:42
+(:40
+):41
+_:95
++:43
+<:60
+>:62
+:(:)58
+":34
+{:123
+}:125
+|:124
+/:47
+-:45
+=:61
+.(DEL):46
+---------WITHOUT SHIFT SPECIAL CHAR
+`:96
+[:91
+]:93
+\:92
+;:59
+':39
+,:44
+.:46
+/:47
+
+-------Keys
+(Spacebar):32
+(Enter):13
+----------------------------------Inproper sereise
+--3 start
+(Spacebar):32
+!:33
+#:35
+$:36
+%:37
+&:38
+--4 start
+(:40
+):41
+*:42
++:43
+,:44
+-:45
+.:46
+/:47
+--start with 5
+:(:)58
+--start with 6
+<:60
+=:61
+>:62
+@:64
+-9 start
+[:91
+\:92
+]:93
+^:94
+_:95
+`:96
+--start with 100
+{:123
+|:124
+}:125
+~:126
+
+
+
+
+
+
