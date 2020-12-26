@@ -1,0 +1,43 @@
+--create table Customers(FirstName Varchar(100),EmalId Varchar(100),SecurityUserName Varchar(100))
+
+--create user Frank without login
+--create user Cheris without login
+--create user Danials without login
+
+--insert into Customers values('jitendra1','jitendra1@gail.com','Frank'),
+--('jitendra2','jitendra2@gmail.com','Cheris'),
+--('jitendra3','jitendra3@gmail.com','Danials')
+
+----Make Grant Permission To User
+--Grant select on dbo.Customers TO Frank
+--Grant select on dbo.Customers TO Cheris
+--Grant select on dbo.Customers TO Danials
+--GO
+
+--Create Function fn_RowLevelSecurity(@FiilterColumnName sysname)
+--returns table
+--with schemabinding
+--as
+--return select 1  as fn_SecureCustomersData where @FiilterColumnName=USER_NAME();
+
+------->>>>>>>
+--Create Security Policy FilterCustomer 
+
+--Add Filter Predicate dbo.fn_RowLevelSecurity(SecurityUserName) on dbo.Customers with(state=on)
+
+-->Row Level Security On Sql Data
+
+--select * from Customers ----Now Get select Not Data Found
+
+--Execute  as user ='Cheris'; ---set User Cheris 
+
+--select * from Customers  --Now u get Data
+
+--select FirstName,EmalId,SecurityUserName from Customers; revert;  ---Revert Selected User In Normal State
+
+
+
+
+
+
+
