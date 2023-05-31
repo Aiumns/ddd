@@ -1,3 +1,5 @@
+jQuery Event Handling Basics - Difference between Bind, Live, Delegate and On
+
 https://www.dotnetcurry.com/jquery/1275/jquery-event-handling-difference-between-bind-live-delegate-on
 
 //jquery diffrent versions
